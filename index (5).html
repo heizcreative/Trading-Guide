@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Financial Markets Master Cheat Sheet</title>
+
+<style>
+  :root{
+    --bg:#191919;
+
+    --text:rgba(255,255,255,.92);
+    --muted:rgba(255,255,255,.62);
+
+    --stroke:rgba(255,255,255,.10);
+    --stroke2:rgba(255,255,255,.08);
+
+    --glass:rgba(0,0,0,.22);
+    --glass2:rgba(255,255,255,.05);
+    --glass3:rgba(0,0,0,.14);
+
+    --radius:18px;
+    --radius2:14px;
+
+    --mono: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    --sans: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+
+    --good:#28E6A5;
+    --warn:#FFD34D;
+    --bad:#FF4D6D;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; margin:0; }
+
+  /* ✅ CHANGE: make background always Notion dark (no white on desktop) */
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    padding: 8px;
+  }
+
+  .wrap{
+    width:100%;
+    max-width: 760px;
+    margin:0 auto;
+  }
+
+  .panel{
+    background: var(--bg);
+    border: 1px solid var(--stroke2);
+    border-radius: var(--radius);
+    overflow:hidden;
+
+    box-shadow:
+      0 16px 50px rgba(0,0,0,.45),
+      inset 0 1px 0 rgba(255,255,255,.05);
+  }
+
+  .top{
+    padding: 10px 10px 8px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    background:
+      radial-gradient(1200px 300px at 50% -80px, rgba(255,255,255,.06), transparent 60%),
+      linear-gradient(to bottom, rgba(255,255,255,.03), transparent 55%);
+  }
+
+  .topRow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .chip{
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: var(--glass);
+    color: rgba(255,255,255,.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.06),
+      0 10px 24px rgba(0,0,0,.25);
+    text-align:center;
+    white-space:nowrap;
+    min-width: 220px;
+  }
+
+  .subChipRow{
+    margin-top: 8px;
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+
+  .miniChip{
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(0,0,0,.18);
+    color: rgba(255,255,255,.78);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+    white-space:nowrap;
+  }
+
+  .content{
+    padding: 10px;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  @media (max-width: 720px){
+    .grid{ grid-template-columns: 1fr; }
+    body{ padding: 6px; }
+    .content{ padding: 8px; }
+  }
+
+  .card{
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: var(--radius2);
+    background: var(--glass3);
+    overflow:hidden;
+    box-shadow:
+      0 14px 32px rgba(0,0,0,.35),
+      inset 0 1px 0 rgba(255,255,255,.05);
+    position:relative;
+  }
+
+  .card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: radial-gradient(900px 240px at 20% -40px, rgba(255,255,255,.06), transparent 60%);
+    pointer-events:none;
+  }
+
+  .cardHead{
+    padding: 10px 10px 8px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    position:relative;
+  }
+
+  .cardTitle{
+    font-weight: 850;
+    font-size: 12px;
+    letter-spacing: .2px;
+    margin:0;
+    color: rgba(255,255,255,.92);
+  }
+
+  /* ✅ CHANGE: all right-side tags become yellow (post-trade vibe) */
+  .cardTag{
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 5px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,211,77,.35);
+    background: rgba(255,211,77,.10);
+    color: rgba(255,211,77,.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    white-space:nowrap;
+  }
+
+  /* ✅ CHANGE: News Day Playbook tags only */
+  .cardTag.tag-bad{
+    border-color: rgba(255,77,109,.35);
+    background: rgba(255,77,109,.10);
+    color: rgba(255,77,109,.95);
+  }
+  .cardTag.tag-good{
+    border-color: rgba(40,230,165,.35);
+    background: rgba(40,230,165,.10);
+    color: rgba(40,230,165,.95);
+  }
+
+  .cardBody{
+    padding: 10px;
+    position:relative;
+  }
+
+  .text{
+    font-size: 11px;
+    line-height: 1.45;
+    color: rgba(255,255,255,.86);
+    margin:0;
+  }
+
+  .muted{
+    color: var(--muted);
+  }
+
+  .divider{
+    height:1px;
+    background: rgba(255,255,255,.07);
+    margin: 10px 0;
+  }
+
+  .list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+
+  .li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding: 9px 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(0,0,0,.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+  }
+
+  /* ✅ CHANGE: inner dot green, outer ring stays grey */
+  .dot{
+    width:10px;height:10px;border-radius:50%;
+    margin-top: 4px;
+    box-shadow: 0 0 0 4px rgba(255,255,255,.06);
+    flex: 0 0 auto;
+    background: var(--good);
+  }
+
+  .liText{
+    font-size: 11px;
+    line-height: 1.35;
+    color: rgba(255,255,255,.86);
+    margin:0;
+  }
+
+  .liText b{
+    color: rgba(255,255,255,.92);
+    font-weight: 800;
+  }
+
+  .tableWrap{
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 14px;
+    overflow:hidden;
+    background: rgba(0,0,0,.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+  }
+
+  table{
+    width:100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+
+  th, td{
+    padding: 10px 10px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    text-align:left;
+    vertical-align: top;
+  }
+
+  th{
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .2px;
+    color: rgba(255,255,255,.70);
+    background: rgba(255,255,255,.03);
+  }
+
+  tr:last-child td{ border-bottom: none; }
+
+  .pillRow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top: 10px;
+  }
+
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding: 6px 9px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(0,0,0,.20);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: rgba(255,255,255,.80);
+    white-space:nowrap;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+  }
+
+  .pillDot{
+    width:10px;height:10px;border-radius:50%;
+    box-shadow:0 0 0 4px rgba(255,255,255,.06);
+    background: rgba(255,255,255,.18);
+  }
+
+  .footer{
+    padding: 10px;
+    border-top: 1px solid rgba(255,255,255,.07);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+    background: rgba(0,0,0,.10);
+  }
+
+  .footText{
+    font-size: 10px;
+    color: rgba(255,255,255,.60);
+    line-height: 1.35;
+  }
+
+  .btn{
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(0,0,0,.22);
+    color: rgba(255,255,255,.82);
+    cursor:pointer;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+    transition: transform 160ms ease, opacity 160ms ease;
+  }
+  .btn:active{ transform: scale(.98); }
+  .btn:hover{ opacity: .92; }
+
+  .note{
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(0,0,0,.18);
+    color: rgba(255,255,255,.82);
+    font-size: 11px;
+    line-height: 1.35;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+  }
+
+  .sectionHint{
+    font-family: var(--mono);
+    font-size: 10px;
+    color: rgba(255,255,255,.65);
+    margin-top: 10px;
+  }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <div class="panel">
+
+    <div class="top">
+      <div class="topRow">
+        <div class="chip">Financial Markets Master Cheat Sheet</div>
+      </div>
+
+      <div class="subChipRow">
+        <div class="miniChip">EST / Canada</div>
+        <div class="miniChip">Institutional Model</div>
+        <div class="miniChip">One trade • One plan</div>
+        <div class="miniChip">No FOMO</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="card">
+        <div class="cardHead">
+          <div class="cardTitle">1) Market Time Cheat Sheet</div>
+          <div class="cardTag">High-probability windows</div>
+        </div>
+        <div class="cardBody">
+          <div class="tableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:34%;">TIME</th>
+                  <th style="width:26%;">SESSION</th>
+                  <th>WHAT INSTITUTIONS DO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2:00 – 5:00 AM</td>
+                  <td>London Open</td>
+                  <td>Set direction (build liquidity + define range)</td>
+                </tr>
+                <tr>
+                  <td>8:00 – 10:00 AM</td>
+                  <td>NY Open</td>
+                  <td>Expand moves (deliver price to targets)</td>
+                </tr>
+                <tr>
+                  <td>10:00 – 11:30 AM</td>
+                  <td>NY Continuation</td>
+                  <td>Final push (complete the delivery)</td>
+                </tr>
+                <tr>
+                  <td>After 12:00 PM</td>
+                  <td>NY Lunch</td>
+                  <td>Distribution / trap zone (low quality entries)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="note">
+            <b>Rule:</b> If you trade outside these windows, you are usually trading against the main institutional flow.
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="cardHead">
+            <div class="cardTitle">2) Institutional Thinking (The Edge)</div>
+            <div class="cardTag">Mindset</div>
+          </div>
+          <div class="cardBody">
+            <div class="sectionHint muted">Institutions do NOT</div>
+            <ul class="list" style="margin-top:8px;">
+              <li class="li"><span class="dot"></span><p class="liText">Chase breakouts</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">Trade randomly</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">Trade indicators alone</p></li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <div class="sectionHint muted">Institutions DO</div>
+            <ul class="list" style="margin-top:8px;">
+              <li class="li"><span class="dot"></span><p class="liText">Identify <b>liquidity</b> (where retail stops sit)</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">Manipulate price into that liquidity</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">Enter when retail exits</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">Hold through expansion (delivery)</p></li>
+            </ul>
+
+            <div class="pillRow">
+              <div class="pill"><span class="pillDot"></span>Market = liquidity delivery system</div>
+              <div class="pill"><span class="pillDot"></span>Retail = liquidity provider</div>
+              <div class="pill"><span class="pillDot"></span>Price moves to orders</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <div class="cardTitle">3) The 3-Phase Institutional Move</div>
+            <div class="cardTag">Model</div>
+          </div>
+          <div class="cardBody">
+            <ul class="list">
+              <li class="li">
+                <span class="dot"></span>
+                <p class="liText"><b>Accumulation</b> — Range, low volatility, “quiet” market</p>
+              </li>
+              <li class="li">
+                <span class="dot"></span>
+                <p class="liText"><b>Manipulation</b> — Fake breakout, stop hunts, liquidity grab</p>
+              </li>
+              <li class="li">
+                <span class="dot"></span>
+                <p class="liText"><b>Expansion</b> — Real move, strong displacement, targets hit</p>
+              </li>
+            </ul>
+
+            <div class="note" style="margin-top:10px;">
+              <b>Common mistake:</b> entering during Manipulation (phase 2).<br/>
+              <b>Goal:</b> enter after manipulation when expansion starts.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardHead">
+          <div class="cardTitle">4) Daily Trading Routine (30–60 min)</div>
+          <div class="cardTag">Workflow</div>
+        </div>
+        <div class="cardBody">
+          <ul class="list">
+            <li class="li">
+              <span class="dot"></span>
+              <p class="liText"><b>Night before (5–10 min)</b><br/>
+                Mark yesterday high/low • Mark Asian range • Check next-day news
+              </p>
+            </li>
+
+            <li class="li">
+              <span class="dot"></span>
+              <p class="liText"><b>Pre-London (1:30–2:00 AM)</b><br/>
+                Set bias (bull/bear) • Which side has more liquidity?
+              </p>
+            </li>
+
+            <li class="li">
+              <span class="dot"></span>
+              <p class="liText"><b>London Open (2:00–5:00 AM)</b><br/>
+                Watch false breaks • No FOMO • Wait for manipulation
+              </p>
+            </li>
+
+            <li class="li">
+              <span class="dot"></span>
+              <p class="liText"><b>NY Open (8:00–10:00 AM)</b><br/>
+                Main entry window • Trade with London direction • One clean trade only
+              </p>
+            </li>
+
+            <li class="li">
+              <span class="dot"></span>
+              <p class="liText"><b>Post-trade</b><br/>
+                Journal outcome • Screenshot setup • Walk away
+              </p>
+            </li>
+          </ul>
+
+          <div class="note">
+            <b>What looks wrong (fix this):</b> most traders skip the routine, trade whenever they “feel like it,” and then blame the market. The routine is the edge.
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="cardHead">
+            <div class="cardTitle">5) News That Actually Matters</div>
+            <div class="cardTag">High-impact only</div>
+          </div>
+          <div class="cardBody">
+            <div class="tableWrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>NEWS</th>
+                    <th>WHY IT MATTERS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Interest Rate Decisions</td>
+                    <td>Cost of money, sets macro direction</td>
+                  </tr>
+                  <tr>
+                    <td>CPI / Inflation</td>
+                    <td>Rate expectations, volatility spikes</td>
+                  </tr>
+                  <tr>
+                    <td>NFP (Jobs)</td>
+                    <td>Economic health, big repricing</td>
+                  </tr>
+                  <tr>
+                    <td>GDP</td>
+                    <td>Growth outlook, macro sentiment</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="note">
+              Everything else is mostly noise. Use it only if it’s directly tied to rates, inflation, or jobs.
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <div class="cardTitle">6) Spot Important News Fast</div>
+            <div class="cardTag">Simple rules</div>
+          </div>
+          <div class="cardBody">
+            <ul class="list">
+              <li class="li"><span class="dot"></span><p class="liText">If it’s <b>red folder</b> news → pay attention</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">If it’s <b>interest rate</b> related → high priority</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">If it’s <b>inflation</b> or <b>jobs</b> → prepare</p></li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <div class="pillRow">
+              <div class="pill"><span class="pillDot"></span>TradingView Economic Calendar</div>
+              <div class="pill"><span class="pillDot"></span>Forex Factory Calendar</div>
+            </div>
+
+            <div class="note">
+              <b>Institutional behavior:</b> they position <b>before</b> the news, not after the spike.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardHead">
+          <div class="cardTitle">7) News Day Playbook</div>
+          <div class="cardTag">Liquidity event</div>
+        </div>
+        <div class="cardBody">
+          <div class="grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="card" style="box-shadow:none;">
+              <div class="cardHead">
+                <div class="cardTitle">Do NOT</div>
+                <!-- ✅ CHANGE: Avoid tag red -->
+                <div class="cardTag tag-bad">Avoid</div>
+              </div>
+              <div class="cardBody">
+                <ul class="list">
+                  <li class="li"><span class="dot"></span><p class="liText">Trade 5 minutes before news</p></li>
+                  <li class="li"><span class="dot"></span><p class="liText">Chase the spike</p></li>
+                  <li class="li"><span class="dot"></span><p class="liText">Guess direction</p></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card" style="box-shadow:none;">
+              <div class="cardHead">
+                <div class="cardTitle">Do</div>
+                <!-- ✅ CHANGE: Process tag green -->
+                <div class="cardTag tag-good">Process</div>
+              </div>
+              <div class="cardBody">
+                <ul class="list">
+                  <li class="li"><span class="dot"></span><p class="liText">Let the spike happen</p></li>
+                  <li class="li"><span class="dot"></span><p class="liText">Wait for retrace</p></li>
+                  <li class="li"><span class="dot"></span><p class="liText">Trade with higher-timeframe direction</p></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="note" style="margin-top:10px;">
+            <b>News = liquidity event.</b> The first move often grabs stops. The cleaner entry is usually after retrace and confirmation.
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="cardHead">
+            <div class="cardTitle">8) Risk Cheat Sheet (Pro Rules)</div>
+            <div class="cardTag">Survival</div>
+          </div>
+          <div class="cardBody">
+            <div class="tableWrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>RULE</th>
+                    <th style="width:32%;">VALUE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Risk per trade</td><td>0.5–1%</td></tr>
+                  <tr><td>Trades per day</td><td>1–2 max</td></tr>
+                  <tr><td>RR target</td><td>1:2 minimum</td></tr>
+                  <tr><td>Loss limit/day</td><td>2 losses = stop</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="note">
+              <b>Capital preservation = survival.</b> If you protect the account, the edge has time to work.
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <div class="cardTitle">9) Quick Daily Checklist</div>
+            <div class="cardTag">Before entry</div>
+          </div>
+          <div class="cardBody">
+            <ul class="list">
+              <li class="li"><span class="dot"></span><p class="liText">HTF bias clear</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">Liquidity marked</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">Session time correct</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">News checked</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">Risk fixed</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">One trade only</p></li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <div class="cardTitle" style="font-size:12px;">10) Why This Works Long-Term</div>
+            <ul class="list" style="margin-top:8px;">
+              <li class="li"><span class="dot"></span><p class="liText">You trade when money moves</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">You trade where liquidity exists</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">You avoid overtrading</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">You align with institutions</p></li>
+              <li class="li"><span class="dot"></span><p class="liText">You build consistency</p></li>
+            </ul>
+
+            <div class="note">
+              <b>What looks wrong (common trap):</b> traders try to “force trades” during lunch or random hours. Good trading is mostly waiting.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <div class="footText">
+        Compact • Apple-glass • Notion-friendly embed.<br/>
+        Tip: keep this open during your main sessions only.
+      </div>
+      <button class="btn" type="button" id="copyBtn">Copy key rules</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const copyBtn = document.getElementById("copyBtn");
+
+  const keyRules =
+`KEY RULES
+- Trade only in high-probability windows (London/NY)
+- Market = liquidity delivery system
+- Wait for manipulation, enter for expansion
+- News = liquidity event (do not chase spikes)
+- Risk 0.5–1%, 1–2 trades/day, 1:2 minimum, 2 losses stop
+- One clean trade only`;
+
+  copyBtn.addEventListener("click", async () => {
+    try{
+      await navigator.clipboard.writeText(keyRules);
+      copyBtn.textContent = "Copied";
+      setTimeout(()=> copyBtn.textContent = "Copy key rules", 1200);
+    }catch{
+      copyBtn.textContent = "Copy failed";
+      setTimeout(()=> copyBtn.textContent = "Copy key rules", 1200);
+    }
+  });
+</script>
+</body>
+</html>
